@@ -5,34 +5,24 @@ using static TopDownCharacterMover;
 
 public class InputHandler : MonoBehaviour
 {
+    [SerializeField] private Joystick joystickMovementDirection;
+    [SerializeField] private Joystick joystickViewDirection;
     public Vector2 InputVector {get; private set;}
     public Vector2 ViewVector {get; private set;}
-
-    //public Vector3 MousePosition { get; private set;}
-
-    public Joystick joystickMovement;
-    public Joystick joystickViewDirection;
     TopDownCharacterMover topDownCharacterMover;
     
     private void Awake() {
         topDownCharacterMover = gameObject.GetComponent<TopDownCharacterMover>();
     }
-
-    void Update()
+    private void Update()
     {
-        //var h = Input.GetAxis("Horizontal");
-        var h = joystickMovement.Horizontal;
-        //var v = Input.GetAxis("Vertical");
-        var v = joystickMovement.Vertical;
-
-        var hView = joystickViewDirection.Horizontal;
-        var vView = joystickViewDirection.Vertical;
-        InputVector = new Vector2(h, v);
-        ViewVector = new Vector2(hView, vView);
-
-        //MousePosition = Input.mousePosition;
+        var horizontalAxisMoveDirection = joystickMovementDirection.Horizontal;
+        var verticalAxisMoveDirection = joystickMovementDirection.Vertical;
+        var horizontalAxisViewDirection = joystickViewDirection.Horizontal;
+        var verticalAxisViewDirection = joystickViewDirection.Vertical;
+        InputVector = new Vector2(horizontalAxisMoveDirection, verticalAxisMoveDirection);
+        ViewVector = new Vector2(horizontalAxisViewDirection, verticalAxisViewDirection);
     }
-
     public void ActionEvent()
     {
         topDownCharacterMover.ActionHandling();

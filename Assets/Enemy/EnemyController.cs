@@ -6,7 +6,7 @@ using UnityEngine.UI;
 public class EnemyController : MonoBehaviour
 {
     private float health;
-    public float maxHealth = 100;
+    public float maxHealth = 1000;
     public GameObject healthBarUI;
     public Slider slider;
     private Camera _cam;

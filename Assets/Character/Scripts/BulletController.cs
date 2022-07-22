@@ -4,10 +4,10 @@ using UnityEngine;
 
 public class BulletController : MonoBehaviour
 {
+    [SerializeField] private new Rigidbody rigidbody;
+    [SerializeField] private GameObject impactEffect;
     public float speed = 40f;
     public int damage = 40;
-    public Rigidbody rigidbody;
-    public GameObject impactEffect;
 
     void Start()
     {
@@ -18,7 +18,7 @@ public class BulletController : MonoBehaviour
     void OnTriggerEnter(Collider hitInfo)
     {
         print("OnTriggerEnter");
-        EnemyController enemy = hitInfo.GetComponent<EnemyController>();
+        EnemyAI enemy = hitInfo.GetComponent<EnemyAI>();
         if (enemy != null)
             enemy.TakeDamage(damage);
         Instantiate(impactEffect, transform.position, transform.rotation);

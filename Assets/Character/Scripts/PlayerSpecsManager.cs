@@ -2,38 +2,36 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class PlayerSpecsManager : MonoBehaviour
 {
-    private float playerHealth;
-    public float playerMaxHealth = 100;
-        public GameObject playerHealthBarUI;
-        public Slider slider;
+    [SerializeField] private float _playerMaxHealth = 1000f;
+    [SerializeField] private GameObject _playerHealthBarUI;
+    [SerializeField] private Slider _playerHealthBarSlider;
+    private float _playerCurrentHealth;
 
-
-    void Start()
+    public void PlayerTakeDamage (float damage)
     {
-        playerHealth = playerMaxHealth;
-        slider.value = CalculateHealth();
+        _playerCurrentHealth -= damage;
+        if (_playerCurrentHealth <= 0)
+            KillPlayer();
+        _playerHealthBarSlider.value = CalculateHealth();
+        if (_playerCurrentHealth < _playerMaxHealth)
+            _playerHealthBarUI.SetActive(true);
     }
-
-    public void PlayerTakeDamage (int damage)
+    private void Start()
     {
-        playerHealth -= damage;
-        if (playerHealth <= 0)
-            PlayerDie();
-        slider.value = CalculateHealth();
-        if (playerHealth < playerMaxHealth)
-            playerHealthBarUI.SetActive(true);
+        _playerCurrentHealth = _playerMaxHealth;
+        _playerHealthBarSlider.value = CalculateHealth();
     }
-
-    void PlayerDie ()
+    private void KillPlayer ()
     {
         print("PlayerDead");
+        SceneManager.LoadScene(0);//---------
     }
-
-    float CalculateHealth()
+    private float CalculateHealth()
     {
-        return playerHealth/playerMaxHealth;
+        return _playerCurrentHealth/_playerMaxHealth;
     }
 }
